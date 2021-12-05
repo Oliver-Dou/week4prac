@@ -14,17 +14,33 @@ library(sf)
 library(sp)
 library(tidyverse)
 library(readr)
+library(tidygraph)
+library(janitor)
+library(countrycode)
 HDI<- read.csv(here("data","Gender Inequality Index (GII).csv"), encoding = "latin1", na = "..",skip = 5)
 world<-st_read(here("data","World_Countries__Generalized_.shp"))
 
 HDI
 ```
-## tidying data
-```{r tidying, echo=TRUE}
-colnames(Gender_ine_idx)
-Gender_ine_idx%>%
-  select("HDI Rank", "Country", contains("201"))
 
+## tidying data
+
+```{r tidying, echo=TRUE}
+HDIcols<- HDI %>%
+  clean_names()%>%
+  select(country,x2010,x2019)%>%
+  mutate(difference = x2019-x2010)%>%
+  slice(1:189,)%>%
+  mutate(iso_code = countrycode(HDIcols$country,origin = 'country.name',destination = 'iso2c'))
+  
+HDIcols
+```
+## join
+
+```{r echo=TRUE}
+Join_HDI<-world%>%
+  clean_names()%>%
+  left_join(.,HDIcols,by=c("aff_iso"="iso_code"))
 ```
 
 
