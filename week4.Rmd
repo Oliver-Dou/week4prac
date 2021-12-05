@@ -4,9 +4,21 @@ author: "Oliver"
 date: "2021/12/5"
 output: html_document
 ---
+#loading packages and reading files
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(dplyr)
+library(sf)
+library(sp)
+library(tidyverse)
+library(readr)
+Gender_ine_idx<- read.csv(here("data","Gender Inequality Index (GII).csv"), header = TRUE, sep = ",", encoding = "latin1")
+
+Gender_ine_idx<-Gender_ine_idx[-c(1:5),]
+
+
 ```
 
 ## R Markdown
