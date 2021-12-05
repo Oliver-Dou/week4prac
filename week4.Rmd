@@ -14,14 +14,22 @@ library(sf)
 library(sp)
 library(tidyverse)
 library(readr)
-Gender_ine_idx<- read.csv(here("data","Gender Inequality Index (GII).csv"), header = TRUE, sep = ",", encoding = "latin1")
+HDI<- read.csv(here("data","Gender Inequality Index (GII).csv"), encoding = "latin1", na = "..",skip = 5)
+world<-st_read(here("data","World_Countries__Generalized_.shp"))
 
-Gender_ine_idx<-Gender_ine_idx[-c(1:5),]
-
+HDI
+```
+## tidying data
+```{r tidying, echo=TRUE}
+colnames(Gender_ine_idx)
+Gender_ine_idx%>%
+  select("HDI Rank", "Country", contains("201"))
 
 ```
 
+
 ## R Markdown
+
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
